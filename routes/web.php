@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\LoginController;
+use App\Http\Middleware\Autenticacion;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,5 +15,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
+
+Route::get('/login', function(){
+    return view('login');
+});
+Route::get('/publico', function(){
+    return view('publico');
+});
+
+Route::get('/privado', function(){
+    return view('privado');
+})->middleware(Autenticacion::class);
+
+Route::post('/login', [LoginController::class,'Login']);
+Route::get('/logout', [LoginController::class,'Logout']);
